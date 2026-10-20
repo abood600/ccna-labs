@@ -1,0 +1,52 @@
+! ISP - CCNA Lab 01: Static & Default Routing
+! Exported from Cisco Packet Tracer (show running-config)
+! enable secret hash and device serial removed for public posting
+!
+version 15.1
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+service password-encryption
+!
+hostname ISP
+!
+enable secret 5 <removed>
+!
+ip cef
+no ipv6 cef
+!
+spanning-tree mode pvst
+!
+interface GigabitEthernet0/0
+ description ## to R1 (customer) ##
+ ip address 203.0.113.2 255.255.255.0
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/1
+ description ## Internet (SW3) ##
+ ip address 8.8.8.1 255.255.255.0
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/2
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+ip classless
+ip route 192.168.10.0 255.255.255.0 GigabitEthernet0/0 203.0.113.1
+ip route 192.168.30.0 255.255.255.0 GigabitEthernet0/0 203.0.113.1
+!
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ login
+!
+end
